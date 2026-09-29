@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="tide">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steady – CBT Mental Wellness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER: logo + user profile -->
+  <header class="topbar">
+    <a class="logo" href="#" aria-label="Steady home">Steady</a>
+    <div class="profile">
+      <button id="profileBtn" class="avatar" aria-haspopup="true" aria-expanded="false" aria-label="User profile">?</button>
+      <div id="profileMenu" class="profile-menu" hidden>
+        <label for="nameInput">Your name</label>
+        <input id="nameInput" type="text" maxlength="24" placeholder="Enter your name">
+        <button id="saveName" class="btn small">Save name</button>
+        <button id="clearData" class="btn small ghost">Delete all my data</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV: mood check | exercise | theme -->
+  <nav class="tabs" aria-label="Main">
+    <button class="tab active" data-view="mood">Mood check</button>
+    <button class="tab" data-view="exercise">Exercise</button>
+    <div class="tab theme-wrap">
+      <label for="themeSelect">Theme</label>
+      <select id="themeSelect">
+        <option value="tide">Tide</option>
+        <option value="dusk">Dusk</option>
+        <option value="moss">Moss</option>
+      </select>
+    </div>
+  </nav>
+
+  <main>
+    <!-- MODULE 1: MOOD CHECK-IN + GUIDED JOURNAL -->
+    <section id="view-mood" class="view active">
+      <h1 id="greeting">How are you feeling?</h1>
+
+      <!-- Step 1: check-in -->
+      <div id="checkin" class="panel">
+        <div class="moods" role="radiogroup" aria-label="Mood">
+          <button class="mood" role="radio" data-mood="1">😞<span>Very low</span></button>
+          <button class="mood" role="radio" data-mood="2">😕<span>Low</span></button>
+          <button class="mood" role="radio" data-mood="3">😐<span>Okay</span></button>
+          <button class="mood" role="radio" data-mood="4">🙂<span>Good</span></button>
+          <button class="mood" role="radio" data-mood="5">😄<span>Great</span></button>
+        </div>
+        <label for="intensity">How strong is this feeling? <output id="intensityOut">5</output>/10</label>
+        <input id="intensity" type="range" min="1" max="10" value="5">
+        <label for="moodNote">Anything on your mind? (optional)</label>
+        <textarea id="moodNote" rows="2"></textarea>
+        <button id="saveMood" class="btn" disabled>Save check-in</button>
+      </div>
+
+      <!-- Step 2: guided journal (CBT thought record) -->
+      <div id="journal" class="panel" hidden>
+        <div class="progress"><div id="progressBar"></div></div>
+        <p id="stepCount" class="muted"></p>
+        <h2 id="stepTitle"></h2>
+        <p id="stepHelp" class="muted"></p>
+        <textarea id="stepInput" rows="4"></textarea>
+        <div class="row">
+          <button id="prevStep" class="btn ghost">Back</button>
+          <button id="nextStep" class="btn">Next</button>
+        </div>
+        <button id="skipJournal" class="link">Skip journal for now</button>
+      </div>
+
+      <!-- History -->
+      <div class="panel">
+        <h2>Recent check-ins</h2>
+        <ul id="history" class="history"></ul>
+        <p id="emptyHistory" class="muted">No check-ins yet. Pick a mood above to start.</p>
+      </div>
+    </section>
+
+    <!-- MODULE 2: EXERCISES -->
+    <section id="view-exercise" class="view">
+      <h1>Calm your body</h1>
+      <p class="muted">Pick one. Go at your own pace, and stop any time.</p>
+
+      <div id="exerciseList" class="cards"></div>
+
+      <div id="exerciseRunner" class="panel" hidden>
+        <button id="exitExercise" class="link">← All exercises</button>
+        <h2 id="exTitle"></h2>
+        <p id="exDesc" class="muted"></p>
+
+        <!-- breathing UI -->
+        <div id="breathUI" hidden>
+          <div class="orb-wrap"><div id="orb" class="orb"></div><div id="orbText" class="orb-text">Ready</div></div>
+          <p id="cycleCount" class="muted center"></p>
+        </div>
+
+        <!-- grounding UI -->
+        <div id="groundUI" hidden>
+          <div class="progress"><div id="groundBar"></div></div>
+          <h3 id="groundStep"></h3>
+          <p id="groundText"></p>
+          <div class="row">
+            <button id="groundPrev" class="btn ghost">Back</button>
+            <button id="groundNext" class="btn">Next</button>
+          </div>
+        </div>
+
+        <div class="row center-row">
+          <button id="startBtn" class="btn">Start</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
